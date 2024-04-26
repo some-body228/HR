@@ -1,0 +1,336 @@
+.container {
+    margin-top: 20px;
+    /* Добавляем стили для смартфонов */
+}
+
+.stack {
+    /* Добавляем стили для смартфонов */
+}
+
+.item {
+    width: 100%;
+    /* Добавляем стили для смартфонов */
+}
+
+.checkbox-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Добавляем стили для смартфонов */
+}
+
+.button {
+    width: 100%;
+    max-width: 210px;
+    height: 40px;
+    /* Добавляем стили для смартфонов */
+}
+
+/*@media (max-width: 320px) {*/
+/*    .container {*/
+/*        width: 320px;*/
+/*    }*/
+/*    h1 {*/
+/*        width: 268px;*/
+/*    }*/
+/*    .firstBox {*/
+
+/*    }*/
+
+/*    .secondBox {*/
+
+/*    }*/
+
+/*    .stack {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*    }*/
+
+/*    .item {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*        width: 320px;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .checkbox-container {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*    }*/
+
+/*    .button {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 480px) {*/
+/*    .container {*/
+/*        width: 320px;*/
+/*    }*/
+/*    h1 {*/
+/*        width: 268px;*/
+/*    }*/
+/*    .firstBox {*/
+
+/*    }*/
+
+/*    .secondBox {*/
+
+/*    }*/
+
+/*    .stack {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*    }*/
+
+/*    .item {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*        width: 320px;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .checkbox-container {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*    }*/
+
+/*    .button {*/
+/*        !* Добавляем стили для смартфонов 480px и выше *!*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 850px) {*/
+/*    .container {*/
+/*        !* Добавляем стили для планшетов 768px и выше *!*/
+/*    }*/
+
+/*    .stack {*/
+/*        !* Добавляем стили для планшетов 768px и выше *!*/
+/*    }*/
+
+/*    .item {*/
+/*        !* Добавляем стили для планшетов 768px и выше *!*/
+/*        width: 320px;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .checkbox-container {*/
+/*        !* Добавляем стили для планшетов 768px и выше *!*/
+/*    }*/
+
+/*    .button {*/
+/*        !* Добавляем стили для планшетов 768px и выше *!*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 1060px) {*/
+/*    .container {*/
+/*        !* Добавляем стили для нетбуков 1024px и выше *!*/
+/*    }*/
+
+/*    .stack {*/
+/*        !* Добавляем стили для нетбуков 1024px и выше *!*/
+/*    }*/
+
+/*    .item {*/
+/*        !* Добавляем стили для нетбуков 1024px и выше *!*/
+/*        width: 800px;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .checkbox-container {*/
+/*        !* Добавляем стили для нетбуков 1024px и выше *!*/
+/*    }*/
+
+/*    .button {*/
+/*        !* Добавляем стили для нетбуков 1024px и выше *!*/
+/*    }*/
+/*}*/
+
+
+/*v2*/
+
+/*@media (max-width: 1060px) {*/
+/*    .container {*/
+/*        padding: 10px;*/
+/*    }*/
+
+/*    .stack {*/
+/*        max-width: 768px;*/
+/*    }*/
+
+/*    .item {*/
+/*        width: 100%;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .button {*/
+/*        max-width: 100%;*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 850px) {*/
+/*    .stack {*/
+/*        max-width: 480px;*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 480px) {*/
+/*    .container {*/
+/*        width: 320px;*/
+/*    }*/
+
+/*    h1 {*/
+/*        font-size: 20px;*/
+/*    }*/
+
+/*    .stack {*/
+/*        max-width: 320px;*/
+/*    }*/
+
+/*    .item {*/
+/*        width: 100%;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .button {*/
+/*        max-width: 100%;*/
+/*    }*/
+/*}*/
+
+/*@media (max-width: 320px) {*/
+/*    .container {*/
+/*        padding: 10px;*/
+/*    }*/
+
+/*    h1 {*/
+/*        font-size: 18px;*/
+/*    }*/
+
+/*    .stack {*/
+/*        max-width: 280px;*/
+/*    }*/
+
+/*    .item {*/
+/*        width: 100%;*/
+/*        height: 40px;*/
+/*    }*/
+
+/*    .button {*/
+/*        max-width: 100%;*/
+/*    }*/
+/*}*/
+
+/*v3*/
+
+@media (max-width: 1060px) {
+    .container {
+        padding: 10px;
+    }
+
+    .stack {
+        max-width: 768px !important;
+    }
+
+    .item {
+        width: 100%;
+        height: 40px;
+    }
+
+    .button {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 820px) {
+    h1 {
+        width: 320px;
+    }
+    .stack {
+        max-width: 480px !important;
+    }
+    .item {
+        width: 320px;
+        height: 40px;
+    }
+    .description {
+        width: 320px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        width: 320px !important;
+        padding: 10px !important;
+    }
+
+    h1 {
+        font-size: 20px !important;
+    }
+
+    .stack {
+        max-width: 320px !important;
+    }
+
+    .item {
+        width: 320px;
+        height: 40px;
+    }
+
+    .checkbox-container {
+        /* стили для чекбоксов */
+    }
+
+    .button {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 370px) {
+    .container {
+        padding: 10px !important;
+    }
+
+    h1 {
+        font-size: 18px !important;
+    }
+
+    .description {
+        width: 320px;
+    }
+
+    .stack {
+        max-width: 280px !important;
+    }
+
+    .item {
+        width: 100%;
+        height: 40px;
+    }
+
+    .button {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 10px !important;
+    }
+
+    h1 {
+        font-size: 18px !important;
+    }
+
+    .description {
+        width: 320px;
+    }
+
+    .stack {
+        max-width: 280px !important;
+    }
+
+    .item {
+        width: 100%;
+        height: 40px;
+    }
+
+    .button {
+        max-width: 100%;
+    }
+}
