@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {Container, Typography} from "@mui/material";
 import {Input, Option, Select, Stack, Table, Textarea} from "@mui/joy";
 import * as React from "react";
