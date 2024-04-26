@@ -1,0 +1,178 @@
+import Avatar from '@mui/joy/Avatar';
+import Box from '@mui/material/Box';
+import Card from '@mui/joy/Card';
+import CardContent from '@mui/joy/CardContent';
+import Typography from '@mui/joy/Typography';
+import ThumbUpOffAltIcon from '@mui/icons-material/ThumbUpOffAlt';
+import TelegramIcon from '@mui/icons-material/Telegram';
+import SchoolIcon from '@mui/icons-material/School';
+import CachedIcon from '@mui/icons-material/Cached';
+import MicOffIcon from '@mui/icons-material/MicOff';
+import MicIcon from '@mui/icons-material/Mic';
+import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
+import HomeIcon from '@mui/icons-material/Home';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+import {ICandidate} from "../../types/types.ts";
+import {WithPopOver} from "../../HOCs/WithPopOver";
+import {Button} from "@mui/material";
+import {getPhotoUrl} from "../../randomizers/rundom.ts";
+import {Stack} from "@mui/joy";
+import {useNavigate} from "react-router-dom";
+import React, {MouseEventHandler} from "react";
+
+
+function CandidateCard(props: any) {
+    const photo = getPhotoUrl()
+    const nav = useNavigate()
+
+    const getpTeamAnalyseColor = ()=>{
+        if((typeof props.teamAnalys != "undefined")) {
+            if(props.teamAnalys < 10) return "error"
+            if(props.teamAnalys < 80) return "warning"
+            return "success"
+        }
+    }
+
+    const getpAcorrdanceColor = ()=>{
+
+        if((typeof props.teamAnalys != "undefined")) {
+            if(props.accordance < 10) return "error.main"
+            if(props.accordance < 80) return "warning.main"
+            return "success.main"
+        }
+    }
+    const onCandidateView = (e: React.MouseEvent<HTMLDivElement, MouseEvent>)=>{
+            nav("/candidateview", {state: {
+                    candidate: {
+                        id: props.id,
+                        photo: photo,
+                        fio: props.fio,
+                        accordance: props.accordance,
+                        teamAnalys: props.teamAnalys,
+                    }
+                }})
+    }
+    return (
+        <>
+            <Card
+                variant="outlined"
+                sx={{
+                    width: 500,
+                }}
+            >
+                <Box
+                    sx={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar src={photo} size="lg" onClick={onCandidateView} sx={{cursor: "pointer"}}/>
+                    {/*<AvatarGroup size="sm" sx={{ '--Avatar-size': '28px' }}>*/}
+                    {/*    <Avatar src="/static/images/avatar/2.jpg" />*/}
+                    {/*    <Avatar src="/static/images/avatar/3.jpg" />*/}
+                    {/*    <Avatar src="/static/images/avatar/4.jpg" />*/}
+                    {/*    <Avatar>+4K</Avatar>*/}
+                    {/*</AvatarGroup>*/}
+                    <Box>
+                        <Stack direction="row" spacing={1}>
+                            {(typeof props.accordance != "undefined") &&
+                                <WithPopOver text={props.accordance + "% соотвествия резюме вакансии" }>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <Typography sx={{fontFamily: "SB sans Text"}} component="div"><Box sx={{color: getpAcorrdanceColor()}}>{props.accordance}%</Box></Typography>
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {(typeof props.teamAnalys != "undefined") &&
+                                <WithPopOver text={props.teamAnalys + "% соотвествия профилю команды" }>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <ThumbUpOffAltIcon color={getpTeamAnalyseColor()}></ThumbUpOffAltIcon>
+                                    </Button>
+                                </WithPopOver>
+
+                            }
+                            {props.flags?.includes("HR") &&
+                                <WithPopOver text={"Отобран рекрутером" }>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <Typography sx={{fontFamily: "SB sans Text"}} component="div"><Box sx={{color: "success.main"}}>HR</Box></Typography>
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.flags?.includes("INTERVIEW") &&
+                                <WithPopOver text={"Прошел интервью" }>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <MicIcon color={"success"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.flags?.includes("STUDENT") &&
+                                <WithPopOver text={"Студент"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <SchoolIcon color={"warning"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.noContact == 1 &&
+                                <WithPopOver text={"Не указан Telegram можно позвониь" }>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <TelegramIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+
+                            {props.changeWork == 1 &&
+                                <WithPopOver text={"Более 2 случаев со стажем <6 месяцев для одного места, включая текущий стаж"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <CachedIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.flags?.includes("MISS_INTERVIEW") &&
+                                <WithPopOver text={"Не пришел на интервью"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <MicOffIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.incorrectGraduate == 1 &&
+                                <WithPopOver text={"Нет высшего образования"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <SchoolIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.badExperience == 1 &&
+                                <WithPopOver text={"Опыт работы не соответствует"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <BusinessCenterIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.diffrentRegion == 1 &&
+                                <WithPopOver text={"Регион проживания отличается от вакансии"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <HomeIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+                            {props.skillIssue == 1 &&
+                                <WithPopOver text={"Отклонен Гига Чатом"}>
+                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
+                                        <DeleteIcon color={"error"} />
+                                    </Button>
+                                </WithPopOver>
+                            }
+
+                        </Stack>
+                    </Box>
+                </Box>
+                <CardContent onClick={onCandidateView} sx={{cursor: "pointer"}}>
+                    <Typography sx={{fontFamily: "SB sans Text"}} level="title-lg">{props.fio}</Typography>
+                </CardContent>
+            </Card>
+        </>
+    )
+}
+
+export default CandidateCard
