@@ -46,6 +46,7 @@ function CandidateCard(props: any) {
             nav("/candidateview", {state: {
                     candidate: {
                         id: props.id,
+                        vacancyId: props.candidate_id,
                         photo: photo,
                         fio: props.fio,
                         accordance: props.accordance,
@@ -68,7 +69,7 @@ function CandidateCard(props: any) {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar src={photo} size="lg" onClick={onCandidateView} sx={{cursor: "pointer"}}/>
+                    <Avatar src={props.photo_url} size="lg" onClick={onCandidateView} sx={{cursor: "pointer"}}/>
                     {/*<AvatarGroup size="sm" sx={{ '--Avatar-size': '28px' }}>*/}
                     {/*    <Avatar src="/static/images/avatar/2.jpg" />*/}
                     {/*    <Avatar src="/static/images/avatar/3.jpg" />*/}
@@ -77,14 +78,14 @@ function CandidateCard(props: any) {
                     {/*</AvatarGroup>*/}
                     <Box>
                         <Stack direction="row" spacing={1}>
-                            {(typeof props.accordance != "undefined") &&
-                                <WithPopOver text={props.accordance + "% соотвествия резюме вакансии" }>
+                            {(typeof props.resumeMatching >= 0) &&
+                                <WithPopOver text={props.teamProfileMatch + "% соотвествия резюме вакансии" }>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <Typography sx={{fontFamily: "SB sans Text"}} component="div"><Box sx={{color: getpAcorrdanceColor()}}>{props.accordance}%</Box></Typography>
                                     </Button>
                                 </WithPopOver>
                             }
-                            {(typeof props.teamAnalys != "undefined") &&
+                            {(typeof props.teamProfileMatch >= 0) &&
                                 <WithPopOver text={props.teamAnalys + "% соотвествия профилю команды" }>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <ThumbUpOffAltIcon color={getpTeamAnalyseColor()}></ThumbUpOffAltIcon>
@@ -92,28 +93,28 @@ function CandidateCard(props: any) {
                                 </WithPopOver>
 
                             }
-                            {props.flags?.includes("HR") &&
+                            {props.recruiterSelection == 1 &&
                                 <WithPopOver text={"Отобран рекрутером" }>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <Typography sx={{fontFamily: "SB sans Text"}} component="div"><Box sx={{color: "success.main"}}>HR</Box></Typography>
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.flags?.includes("INTERVIEW") &&
+                            {props.interviewPassed == 1 &&
                                 <WithPopOver text={"Прошел интервью" }>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <MicIcon color={"success"} />
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.flags?.includes("STUDENT") &&
-                                <WithPopOver text={"Студент"}>
-                                    <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
-                                        <SchoolIcon color={"warning"} />
-                                    </Button>
-                                </WithPopOver>
-                            }
-                            {props.noContact == 1 &&
+                            {/*{props.flags?.includes("STUDENT") &&*/}
+                            {/*    <WithPopOver text={"Студент"}>*/}
+                            {/*        <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>*/}
+                            {/*            <SchoolIcon color={"warning"} />*/}
+                            {/*        </Button>*/}
+                            {/*    </WithPopOver>*/}
+                            {/*}*/}
+                            {props.noTelegram == 1 &&
                                 <WithPopOver text={"Не указан Telegram можно позвониь" }>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <TelegramIcon color={"error"} />
@@ -121,42 +122,42 @@ function CandidateCard(props: any) {
                                 </WithPopOver>
                             }
 
-                            {props.changeWork == 1 &&
+                            {props.frequentJobChanges == 1 &&
                                 <WithPopOver text={"Более 2 случаев со стажем <6 месяцев для одного места, включая текущий стаж"}>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <CachedIcon color={"error"} />
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.flags?.includes("MISS_INTERVIEW") &&
+                            {props.interviewFailed == 1 &&
                                 <WithPopOver text={"Не пришел на интервью"}>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <MicOffIcon color={"error"} />
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.incorrectGraduate == 1 &&
+                            {props.noHigherEducation == 1 &&
                                 <WithPopOver text={"Нет высшего образования"}>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <SchoolIcon color={"error"} />
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.badExperience == 1 &&
+                            {props.experienceMismatch == 1 &&
                                 <WithPopOver text={"Опыт работы не соответствует"}>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <BusinessCenterIcon color={"error"} />
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.diffrentRegion == 1 &&
+                            {props.regionMismatch == 1 &&
                                 <WithPopOver text={"Регион проживания отличается от вакансии"}>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <HomeIcon color={"error"} />
                                     </Button>
                                 </WithPopOver>
                             }
-                            {props.skillIssue == 1 &&
+                            {props.gigaRejected == 1 &&
                                 <WithPopOver text={"Отклонен Гига Чатом"}>
                                     <Button sx={{padding: "0", margin: "0", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                                         <DeleteIcon color={"error"} />

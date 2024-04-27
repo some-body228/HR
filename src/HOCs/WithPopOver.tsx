@@ -22,20 +22,20 @@ export function WithPopOver(props: IWithPopOver) {
 
     return (
         <>
-            <Box component="div"  aria-describedby={id}  sx={{padding: 0, margin: 0}} onClick={handleClick}>
+            <Box component="div"  aria-describedby={id}  sx={{padding: 0, margin: 0}}   onMouseOver={handleClick}>
                 {props.children}
             </Box>
             <Popover
                 id={id}
                 open={open}
                 anchorEl={anchorEl}
-                onClose={handleClose}
+                onMouseMove={handleClose}
                 anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'left',
                 }}
             >
-                <Typography sx={{fontFamily: "SB sans Text"}} sx={{ p: 2 }}>{props.text}</Typography>
+                <Typography sx={{fontFamily: "SB sans Text", p: 2}}>{props.text}</Typography>
             </Popover>
         </>
     )

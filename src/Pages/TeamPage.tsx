@@ -15,10 +15,11 @@ function TeamPage() {
     const [open, setOpen] = React.useState(false);
     const [selectedPos, setSelectedPos] = useState()
     const [selectedGradeName, setSelectedGradeName] = useState()
+    const [selectedFIO, setSelectedFIO] = useState()
 
     const handleChange = (event: SelectChangeEvent<string | number>, child: ReactNode) => {
         localStorage.setItem("count", String(++count))
-        navigate("/create", { state: grades[selectedGradeName] });
+        navigate("/create", { state: {grade: grades[selectedGradeName], fio:selectedFIO} });
     };
 
     const handleClose = () => {
@@ -31,6 +32,8 @@ function TeamPage() {
     const select = (e) => {
         setSelectedGradeName(e.currentTarget.id.split("_")[1])
         setSelectedPos(e.currentTarget.id.split("_")[0]);
+        setSelectedPos(e.currentTarget.id.split("_")[0]);
+        setSelectedFIO(e.currentTarget.id.split("_")[2]);
         console.log(e.currentTarget)
     };
     return (
@@ -53,7 +56,7 @@ function TeamPage() {
                 <tbody>
                 {team.map((teammember)=> {
                     return (
-                        <tr onClick={select} id={teammember.posID + "_" + teammember.grade} key={teammember.grade} style={{backgroundColor: teammember.posID == selectedPos? "#F0F0F0": "" }}>
+                        <tr onClick={select} id={teammember.posID + "_" + teammember.grade + "_" + teammember.name} key={teammember.grade} style={{backgroundColor: teammember.posID == selectedPos? "#F0F0F0": "" }}>
                             <td style={{width: '20%'}}>
                                 <Avatar src={teammember.url}></Avatar>
                                 <Typography sx={{fontFamily: "SB sans Text"}}>{teammember.name}</Typography>

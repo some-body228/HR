@@ -34,9 +34,23 @@ export function CandidateViewPage() {
 
     const [cand, setCand] = useState<Candidate>({})
     const [isPopupOpened, setIsPopupOpened] = useState(false)
+    const [amount, setAmount] = useState()
+    const [vacancy, setVacancy] = useState()
     useEffect(() => {
-        axios.get<Candidate[]>(`http://localhost:8001/candidates/?id=${loc.state?.candidate.id}`)
-            .then( res=> setCand(res.data[0]))
+        // axios.get<Candidate[]>(`http://localhost:8000/candidates/?id=${loc.state?.candidate.id}`)
+        //     .then( res=> setCand(res.data[0]))
+        axios.get<any>(`http://localhost:8000/candidates_by_vacancy/${loc.state?.candidate.id}`)
+            .then(res => setCand(res.data.find(el=> {
+                return el.id == loc.state?.candidate.id
+            })))
+        axios.get<any>(`http://localhost:8000/vacancies_by_candidate/${loc.state?.candidate.vacancyId}`)
+            .then(res => setAmount(res.data.length))
+        axios.get<any>(`http://localhost:8000/vacancies_by_candidate/${loc.state?.candidate.vacancyId}`)
+            .then(res => setVacancy(res.data.find(el=> {
+                return el.candidate_id == loc.state?.candidate.id
+            })))
+
+
 
     }, []);
 
@@ -80,6 +94,16 @@ export function CandidateViewPage() {
         console.log(e.currentTarget)
     };
 
+    const downloadResume = () =>{
+        cand.content
+        const linkSource = `data:application/pdf;base64,${cand.content}`;
+        const downloadLink = document.createElement("a");
+        const fileName = "Резюме.pdf";
+        downloadLink.href = linkSource;
+        downloadLink.download = fileName;
+        downloadLink.click();
+    }
+
 
     return (
         <Container maxWidth="lg" sx={ {marginTop: "20px"}}>
@@ -89,18 +113,18 @@ export function CandidateViewPage() {
                 // justifyContent="space-between"
             >
                 <Box sx={{width: "15%", height: "15%"}}>
-                    <Avatar size="lg" sx={{width: "100%", height: "100%"}}   src={loc.state?.candidate.photo}></Avatar>
+                    <Avatar size="lg" sx={{width: "150px", height: "150px"}} src={cand?.photo_url}></Avatar>
                 </Box>
-                <Typography sx={{fontFamily: "SB sans Text", margin: "0 0 0 20px"}}  level="title-lg">{cand.fio}</Typography>
-                {(typeof cand.accordance != "undefined") &&
-                    <WithPopOver text={cand.accordance + "% соотвествия резюме вакансии" }>
+                <Typography sx={{fontFamily: "SB sans Text", margin: "0 0 0 20px"}}  level="title-lg">{cand?.fio}</Typography>
+                {(typeof cand?.accordance != "undefined") &&
+                    <WithPopOver text={cand?.accordance + "% соотвествия резюме вакансии" }>
                         <MaterialB sx={{padding: "0", margin: "0 0 0 10px", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                             <Typography sx={{fontFamily: "SB sans Text"}} component="div"><Box sx={{color: getpAcorrdanceColor()}}>{cand.accordance}%</Box></Typography>
                         </MaterialB>
                     </WithPopOver>
                 }
-                {(typeof cand.teamAnalys != "undefined") &&
-                    <WithPopOver text={cand.teamAnalys + "% соотвествия профилю команды" }>
+                {(typeof cand?.teamAnalys != "undefined") &&
+                    <WithPopOver text={cand?.teamAnalys + "% соотвествия профилю команды" }>
                         <MaterialB sx={{padding: "0", margin: "0 0 0 10px", display: "flex", maxWidth: "20px", minWidth: "30px"}}>
                             <ThumbUpOffAltIcon color={getpTeamAnalyseColor()}></ThumbUpOffAltIcon>
                         </MaterialB>
@@ -112,17 +136,17 @@ export function CandidateViewPage() {
                 justifyContent="space-between"
                    sx={{ marginTop: "30px"}}>
                     <Box>
-                        <Typography sx={{fontFamily: "SB sans Text"}} level="title-md">8-800-555-35-35</Typography>
+                        <Typography sx={{fontFamily: "SB sans Text"}} level="title-md">{cand?.phone_num}</Typography>
                         <Typography sx={{fontFamily: "SB sans Text"}} level="body-sm">Основной</Typography>
                     </Box>
                     <Box>
-                        <Typography sx={{fontFamily: "SB sans Text"}} level="title-md">example@mail.ru</Typography>
+                        <Typography sx={{fontFamily: "SB sans Text"}} level="title-md">{cand?.email}</Typography>
                         <Typography sx={{fontFamily: "SB sans Text"}} level="body-sm">Основной</Typography>
 
                     </Box>
 
                     <Box>
-                        <Typography sx={{fontFamily: "SB sans Text"}} level="title-md">Резюме.pdf</Typography>
+                        <Typography sx={{fontFamily: "SB sans Text", cursor: "pointer"}} level="title-md" onClick={downloadResume}>Резюме.pdf</Typography>
                         <Typography sx={{fontFamily: "SB sans Text"}} level="body-sm">Основной</Typography>
 
                     </Box>
@@ -139,7 +163,7 @@ export function CandidateViewPage() {
                    spacing={2}
             >
                 <Box>
-                    <Typography sx={{fontFamily: "SB sans Text"}} level="body-sm">Текущий статус: <Typography sx={{fontFamily: "SB sans Text"}} display={"inline"} fontWeight="lg">{Categories[cand.category]}</Typography></Typography>
+                    <Typography sx={{fontFamily: "SB sans Text"}} level="body-sm">Текущий статус: <Typography sx={{fontFamily: "SB sans Text"}} display={"inline"} fontWeight="lg">{Categories[cand?.status]}</Typography></Typography>
                 </Box>
                 <Box>
                     <Button sx={{ height: "40px"}} onClick={handleOpen}>
@@ -154,7 +178,7 @@ export function CandidateViewPage() {
                         ></WarningAmberIcon>
                     <Typography sx={{fontFamily: "SB sans Text"}} display={"inline"}>
                         <Box sx={{color: "info.main"}} display={"inline"}>
-                            Расматривается еще на 9 вакансий</Box>
+                            Расматривается на вакансии: {amount}</Box>
                     </Typography>
 
             </Box>

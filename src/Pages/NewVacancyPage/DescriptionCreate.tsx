@@ -120,19 +120,15 @@ function DescriptionCreate(props: Props) {
                                 placeholder="Введите необходимые навыки"
                             />
                             <Stack direction="row" spacing={2}>
-                                <WithPopOver text={""}>
                                     <Button>Заполнить вручную</Button>
-                                </WithPopOver>
                                 <Button loading={isLoading} onClick={onVacancyCreate}>Сгенерировать {props.finalVacancy && "заново"}</Button>
                             </Stack>
-                        <WithPopOver text={""}>
                             <MaterialButton sx={{paddingLeft: "0"}}>
                                 <Typography sx={{fontFamily: "SB sans Text", margin: "0 0 0 5px", fontSize: "10px"}} variant="caption" gutterBottom>
                                     Тесты <Typography sx={{fontFamily: "SB sans Text", fontSize: "12px"}} variant="caption" color="info"> 0 </Typography>
                                 </Typography>
                                 <AddCircleOutlineIcon color="info"></AddCircleOutlineIcon>
                             </MaterialButton>
-                        </WithPopOver>
                         </Stack>
 
                     </Grid>

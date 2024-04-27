@@ -1,6 +1,6 @@
-import {Container, Typography} from "@mui/material";
-import {useState} from "react";
-import {Button, Stack} from "@mui/joy";
+import {Button as MaterialButton, Container, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import {Button, Modal, ModalClose, Sheet, Stack} from "@mui/joy";
 import {WithPopOver} from "../../HOCs/WithPopOver.tsx";
 import DescriptionCreate from "./DescriptionCreate.tsx";
 import BriefCreate from "./BriefCreate.tsx";
@@ -8,6 +8,9 @@ import {useLocation, useNavigate} from "react-router-dom";
 import {saveVacancy} from "../../api/api.ts";
 import {getRandomFIO} from "../../randomizers/rundom.ts";
 import Divider from '@mui/material/Divider';
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import * as React from "react";
 
 
 interface Props {
@@ -25,6 +28,13 @@ function NewVacancyPage(props: Props) {
     const [currentStep, setCurrentStep] = useState("input")
 
     const [finalVacancy, setFinalVacancy] = useState("")
+
+    const [open, setOpen] = React.useState(true);
+
+
+    const onClick = ()=>{
+        setOpen(false)
+    }
 
     const changeStep = () => {
         if(currentStep === "input") {
@@ -54,7 +64,7 @@ function NewVacancyPage(props: Props) {
             navigate("/")
         }
 
-    const [pos, setPos] = useState(location.state)
+    const [pos, setPos] = useState(location.state.grade)
 
     return (
         <>
@@ -84,6 +94,35 @@ function NewVacancyPage(props: Props) {
                     </Button>
                 </Stack>
             </Container>
+            <Modal
+                aria-labelledby="modal-title"
+                aria-describedby="modal-desc"
+                open={open}
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+            >
+                <Sheet
+                    variant="outlined"
+                    sx={{
+                        width: 700,
+                        borderRadius: 'md',
+                        p: 3,
+                        boxShadow: 'lg',
+                    }}
+                >
+                    <Typography
+                        sx={{fontFamily: "SB sans Text", fontSize: "18px", fontWeight: "600"}}
+                        id="modal-title"
+                    >
+                        Вы открываете вакаснию на позицию "{location.state.grade}"
+                        <Stack direction={"row"} spacing={2} justifyContent={"end"} sx={{marginTop: "20px"}}>
+                            <Button onClick={onClick}>Скопировать</Button>
+                            <Button onClick={onClick}>Создать</Button>
+                        </Stack>
+                    </Typography>
+
+                </Sheet>
+            </Modal>
+
         </>
     )
 }

@@ -38,9 +38,9 @@ function VacancyView() {
     const [can, setCan] = useState<ICandidate[]>()
     console.log(vacancy)
     useEffect(() => {
-        axios.get<any>(`http://localhost:8001/candidates_by_vacancy/${location.state}`)
+        axios.get<any>(`http://localhost:8000/candidates_by_vacancy/${location.state}`)
             .then(res => setCan(res.data))
-        axios.get<any>(`http://localhost:8001/vacancies/?id=${location.state}`)
+        axios.get<any>(`http://localhost:8000/vacancies/?id=${location.state}`)
             .then(res => setVacancy(res.data[0]))
     }, []);
 
@@ -51,7 +51,7 @@ function VacancyView() {
         return canToRender?.map((candidate: ICandidate) => {
             return (
                     <Grid item xs={5}>
-                        <CandidateCard {...candidate} key={candidate.id} />
+                        <CandidateCard {...candidate} key={candidate.id} vacancyId={location.state} />
                     </Grid>
                     )
         })
@@ -86,14 +86,12 @@ function VacancyView() {
                         <Button sx={{width: "230px", height: "40px", marginLeft: "30px"}} onClick={handleOpen}>Добавить слоты для интевью</Button>
 
                     </Stack>
-                    <WithPopOver text={""}>
                         <MaterialButton sx={{paddingLeft: "0"}}>
                             <Typography sx={{fontFamily: "SB sans Text"}} variant="caption" color="info" gutterBottom sx={{margin: "0 0 0 5px"}}>
                                 Команда
                             </Typography>
                             <AddCircleOutlineIcon color="info"></AddCircleOutlineIcon>
                         </MaterialButton>
-                    </WithPopOver>
                     <Typography sx={{fontFamily: "SB sans Text", fontSize: "18px", fontWeight: "600"}} variant="h4" gutterBottom >
                         Рекомендованные из Сбера:
                     </Typography>
